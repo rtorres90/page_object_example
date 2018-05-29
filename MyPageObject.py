@@ -1,7 +1,7 @@
 class MyPageObject(object):
     text_field_xpath = "//input[@name='text' and @type='text']"
     textarea_field_xpath = "//textarea[@name='textarea']"
-    select_field_xpath = "//select[@name='numeros']"
+    dropdown_field_xpath = "//select[@name='numeros']"
     radiobuttons_field_xpath = "//input[@name='numero' and @type='radio']"
     radiobutton_by_value_xpath = "//input[@name='numero' and @type='radio' and @value='%s']"
     checkbox_field_xpath = "//input[@name='likeNumbers' and @type='checkbox']"
@@ -63,3 +63,23 @@ class MyPageObject(object):
 
     def select_radiobutton_by_value(self, value):
         self.webdriver.find_element_by_xpath(self.radiobutton_by_value_xpath % value).click()
+
+    @property
+    def dropdown_web_element(self):
+        from selenium.webdriver.support.ui import Select
+        return Select(self.webdriver.find_element_by_xpath(self.dropdown_field_xpath))
+
+    def get_selected_dropdown_text(self):
+        return self.dropdown_web_element.first_selected_option.text
+
+    def get_selected_dropdown_value(self):
+        return self.dropdown_web_element.first_selected_option.get_attribute('value')
+
+    def set_dropdown_option_by_text(self, text):
+        self.dropdown_web_element.select_by_visible_text(text)
+
+    def set_dropdown_option_by_value(self, value):
+        self.dropdown_web_element.select_by_value(value)
+
+    def set_dropdown_option_by_index(self, index):
+        self.dropdown_web_element.select_by_index(index)
