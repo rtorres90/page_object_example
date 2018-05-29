@@ -1,6 +1,6 @@
-from MyPageObject import MyPageObject
-
 from selenium import webdriver
+
+from MyPageObject import MyPageObject
 
 driver = webdriver.Chrome()
 
